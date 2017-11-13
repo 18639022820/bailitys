@@ -1,0 +1,11 @@
+.htcon{
+	width:100%;
+	text-align:center;
+	overflow:hidden;
+}
+.htcon li{
+	float:left;
+	list-style-type:none;
+	padding:5px 10px;
+	border:1px solid #ccc;
+}

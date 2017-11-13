@@ -1,0 +1,6 @@
+.eacdiv{
+	overflow:hidden;
+}
+.lianjie{
+	float:left;
+}

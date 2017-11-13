@@ -1,0 +1,105 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\AdminController;
+use App\AdminService\AdminToolService;
+use Illuminate\Http\Request;
+use App\model\ConfigApp;
+use App\Service\WalletService;
+
+/**
+ * 小工具，轮播图等
+ */
+class AdminToolController extends AdminController
+{
+
+ 	/**
+ 	 * 后台首页
+ 	 */
+ 	public function index(){
+ 		return view('admin/index');
+ 	}
+ 	/**
+ 	 * 前台轮播图控制
+ 	 * @return [type] [description]
+ 	 */
+ 	public function lunboto(){
+ 		$lunbolist = (new AdminToolService())->getlunbo();
+ 		return view('admin/tool/lunboto',['lunbolist'=>$lunbolist]);
+ 	}
+
+ 	/**
+ 	 * 编辑轮播图
+ 	 * @param  [type] $id [description]
+ 	 * @return [type]     [description]
+ 	 */
+ 	public function editlunboto(Request $request){
+ 		$findlunbo = (new AdminToolService())->findlunbo($request->id);
+ 		return view('admin/tool/editorlunbotoone',['findlunbo'=>$findlunbo]);
+ 	}
+
+ 	/**
+ 	 * 上传轮播图
+ 	 * @return [json] [轮播图地址]
+ 	 */
+ 	public function upimg(Request $request){
+ 		$imagebase64 = $request->input('data');
+		$data = $this->UploadfiletoBun($imagebase64,'lunbotu');
+		$dafile= ['name'=>$data['name'],'fullpath'=>$data['fullpath']];
+		return response() -> json(Ajax($data['staus'],'保存成功',$dafile));
+ 	}
+
+ 	/**
+ 	 * 轮播图保存
+ 	 */
+ 	public function lunbotusane(Request $request){
+ 		$request = $request->all();
+		$configapp=ConfigApp::find($request["id"]);
+		$configapp->value=$request["value"];
+		$configapp->discri = $request["discri"];
+		$configapp->save();
+		return 1;
+ 	}
+
+ 	/**
+ 	 * 管理钱包
+ 	 */
+ 	public function wallet(){
+ 		$wallerservice = new WalletService();
+ 		$list = $wallerservice -> listtowall();
+ 		// /var_dump($list);
+ 		return view('admin/tool/wallet',['list'=>$list]);
+ 	}
+
+ 	/**
+ 	 * 获取单个人的钱包
+ 	 */
+ 	public function perwalletadmin(Request $request){
+ 		$uid 	= 	$request->uid;
+ 		$wallerservice 		=	 new WalletService();
+ 		$userinfo 	=	 $wallerservice -> getscorebyuid($uid);
+ 		return view('admin/tool/perwalletadmin',['userinfo'=>$userinfo]);
+ 	}
+
+ 	/**
+ 	 * 后台调整个人钱包
+ 	 */
+ 	public function savepersonwallbyadmin(Request $request){
+ 		$persionwall = $request->all();
+ 		$wallerservice 		=	 new WalletService();
+ 		$persionwll 		=	 $wallerservice -> savewaletbyadmin($persionwall);
+ 		switch ($persionwll) {
+ 			case 1:
+ 			case 2:	
+ 			case 3:
+ 			case 4:
+ 			 return redirect('admin/tool/wallet');	
+ 				
+ 			default:
+ 				
+ 				break;
+ 		}
+
+ 	}
+
+}

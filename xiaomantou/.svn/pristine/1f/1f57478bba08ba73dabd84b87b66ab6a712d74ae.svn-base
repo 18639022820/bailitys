@@ -1,0 +1,37 @@
+@extends('layouts.admin')
+@section('title')钱包@endsection
+
+@section('link')
+<link rel="stylesheet" type="text/css" href="{{url('/css/lunbo.css')}}">
+@endsection
+
+	@section('content')
+		
+		<div class="container">
+		    @foreach ($list as $v)
+		        {{ $v->username }}
+		        {{ $v->tele }}
+		        <span  style="color:red">{{ $v->money }}</span>元
+		        {{ $v->wauserinfo }}
+		        {{ $v->tele }}
+		        @if(!@empty ($v->time))
+		       	 {{ date('Y-m-d H:i:s',$v->time) }}
+		        @endif
+		        <a href="{{URL::to('admin/tool/perwalletadmin')}}/{{$v->id}}.html"><span>编辑</span></a>
+		       <br/>
+		    @endforeach
+		</div>
+
+	{{ $list->links() }}
+
+	@endsection
+
+@section('scrip')
+ <script type="text/javascript">
+
+ </script>  
+@endsection
+
+@section('footer')
+    
+@endsection

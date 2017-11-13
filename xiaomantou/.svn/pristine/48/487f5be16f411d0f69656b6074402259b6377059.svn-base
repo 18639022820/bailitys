@@ -1,0 +1,38 @@
+@extends('layouts.admin')
+@section('title')钱包@endsection
+
+@section('link')
+<link rel="stylesheet" type="text/css" href="{{url('/css/lunbo.css')}}">
+@endsection
+
+	@section('content')
+	<form action="{{URL::to('admin/tool/savepersonwallbyadmin')}}" method="post">		
+		<input type="hidden" name="uid" value="{{ $userinfo->id }}">
+		{{ $userinfo->id}}
+		<br/>
+		<span>用户名</span>
+		{{ $userinfo->username}}
+		<br/>
+		<span>用户电话</span>
+		{{ $userinfo->tele}}
+		<br/>
+		<span>钱</span>
+			<input type="text" name="money" value="{{ $userinfo->money==null ? 0: $userinfo->money}}">元
+		<br/>
+		<span>时间</span>
+		{{ $userinfo->time}}
+		<button>保存</button>
+
+	</form>
+	@endsection
+
+@section('scrip')
+ <script type="text/javascript">
+
+ </script>  
+@endsection
+
+@section('footer')
+    
+@endsection
+	

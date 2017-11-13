@@ -1,0 +1,25 @@
+.headertit{
+	
+	text-align:center;
+}
+.conlogin{
+	width:400px;
+	margin:0px auto;
+	padding:40px 20px;
+	border:1px solid #ccc;
+	border-radius:10px;
+}
+.lab{
+	width:90px;
+	display:inline-block;
+}
+.conlogin form input{
+	width:300px;
+	height:30px;
+	margin-bottom:40px;
+}
+.conlogin form button{
+	width:100%;
+	height:40px;
+	
+}
